@@ -26,7 +26,7 @@ PRO hlorey_adjust, in_file, out_file, srtm_file, globcover_file
 	globcover_block = bytarr(nblocks)
 
 	openr, in_lun, in_file, /get_lun
-	openr, srtm_lun, srtm_stdev_file, /get_lun
+	openr, srtm_lun, srtm_file, /get_lun
 	openr, globcover_lun, globcover_file, /get_lun
 	openw, out_lun, out_file, /get_lun
 
