@@ -16,6 +16,8 @@ PRO hlorey_adjust, in_file, out_file, srtm_file, globcover_file
 	;threshold
 	thresh = 600
 
+	min_adjust = 10 ;do not adjust below this hlorey
+
 	in_info = file_info(in_file)
 
 	nblocks = in_info.size/4/100
@@ -36,7 +38,7 @@ PRO hlorey_adjust, in_file, out_file, srtm_file, globcover_file
 		readu, srtm_lun, srtm_block
 		readu, globcover_lun, globcover_block
 
-		index = where((in_block gt 0) and (srtm_block le thresh) and ((globcover_block eq 40) or (globcover_block eq 160)), count)
+		index = where((in_block ge min_adjust) and (srtm_block le thresh) and ((globcover_block eq 40) or (globcover_block eq 160)), count)
 		if (count gt 0) then mod_lorey, in_block, index
 
 		writeu, out_lun, in_block
@@ -51,7 +53,7 @@ PRO hlorey_adjust, in_file, out_file, srtm_file, globcover_file
 		readu, in_lun, in_block
 		readu, srtm_lun, srtm_block
 		readu, globcover_lun, globcover_block
-		index = where((in_block gt 0) and (srtm_block le thresh) and ((globcover_block eq 40) or (globcover_block eq 160)), count)
+		index = where((in_block ge min_adjust) and (srtm_block le thresh) and ((globcover_block eq 40) or (globcover_block eq 160)), count)
 		;index = where((in_block gt 0) and (srtm_block le thresh), count)
 		if (count gt 0) then mod_lorey, in_block, index
 
